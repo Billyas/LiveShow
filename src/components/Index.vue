@@ -1,6 +1,6 @@
 <template>
-<h1>index</h1>
-  <el-button @click="redict()" type="primary" plain>主页</el-button>
+<h1>Live Show</h1>
+  <el-button @click="redict()" type="primary" plain>开始</el-button>
 </template>
 
 <script>

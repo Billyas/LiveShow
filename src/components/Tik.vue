@@ -26,12 +26,14 @@ export default {
         return {
             player: null,
             playing: false,
+            aurl: this.$route.query.ourl,
             ourl: "http://api.vipmisss.com:81/mf/" + (this.$route.query.ourl === undefined ? 'jsonmihu.txt' : this.$route.query.ourl),
-            url: "http://02b.expo-hf.com/live/cx_349144.flv",
+            url: this.$route.query.url === undefined ? "http://02b.expo-hf.com/live/cx_355948.flv" : this.$route.query.url,
             name: "未知",
             ups: [],
             index: 0,
-            currentId:1,
+            currentId: 1,
+
         };
     },
     beforeCreate() {
@@ -41,20 +43,26 @@ export default {
     created() {
 
         axios.get(this.ourl).then(
-            response => {
-                this.ups = response.data.zhubo
-                // console.log(this.ups)
-                console.log(this.ups[0].address)
-                // this.url = this.ups[0].address
-                this.url = this.ups[0].address
-                this.name = this.ups[0].title
-                this.filterurl()
-            },
-            error => {
-                console.log("失败" + error)
-            }
-        )
+                response => {
+                    this.ups = response.data.zhubo
+                    // console.log(this.ups)
+                    // this.url = this.ups[0].address
+                    this.filterurl()
+                    console.log(this.url)
 
+                    if (this.$route.query.url == undefined) {
+                        console.log("url为空")
+                        this.url = this.ups[0].address
+                        this.name = this.ups[0].title
+                        // this.aa = this.ups[0].address
+                        console.log(this.url)
+                    }
+
+                },
+                error => {
+                    console.log("失败" + error)
+                }
+            )
 
 
 
@@ -62,7 +70,8 @@ export default {
     },
     mounted() {
         this.loadFlv();
-        window.addEventListener('mousewheel', this.debounce(this.handleScroll,300), true)||window.addEventListener("DOMMouseScroll",this.debounce(this.handleScroll,300),false)
+
+        window.addEventListener('mousewheel', this.debounce(this.handleScroll, 300), true) || window.addEventListener("DOMMouseScroll", this.debounce(this.handleScroll, 300), false)
 
     },
     methods: {
@@ -152,7 +161,9 @@ export default {
             this.url = this.ups[this.index].address
             console.log(this.url)
             this.name = this.ups[this.index].title
+            console.log(this.name)
             this.loadFlv()
+            this.$router.replace({ path: '/tik', query: { ourl: this.aurl, url: this.url } })
         },
         clickup() {
             //flv.js加载上一条视频
@@ -163,7 +174,10 @@ export default {
             this.url = this.ups[this.index].address
             console.log(this.url)
             this.name = this.ups[this.index].title
+            console.log(this.name)
             this.loadFlv()
+            this.$router.replace({ path: '/tik', query: { ourl: this.aurl, url: this.url } })
+
         },
 
         //函数防抖

@@ -56,7 +56,7 @@ export default {
       this.$router.push({
         "path": "/tik",
         "query": {
-          "url": url
+          "ourl": url
         }
       })
     }
