@@ -58,6 +58,10 @@ export default {
                         console.log(this.url)
                     }
 
+                    if (this.$route.query.title != undefined) {
+                        this.name = this.$route.query.title
+                    }
+
                 },
                 error => {
                     console.log("失败" + error)
@@ -163,7 +167,7 @@ export default {
             this.name = this.ups[this.index].title
             console.log(this.name)
             this.loadFlv()
-            this.$router.replace({ path: '/tik', query: { ourl: this.aurl, url: this.url } })
+            this.$router.replace({ path: '/tik', query: { ourl: this.aurl, url: this.url, title: this.name } })
         },
         clickup() {
             //flv.js加载上一条视频
@@ -176,7 +180,7 @@ export default {
             this.name = this.ups[this.index].title
             console.log(this.name)
             this.loadFlv()
-            this.$router.replace({ path: '/tik', query: { ourl: this.aurl, url: this.url } })
+            this.$router.replace({ path: '/tik', query: { ourl: this.aurl, url: this.url, title: this.name } })
 
         },
 
